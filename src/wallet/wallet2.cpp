@@ -1232,6 +1232,18 @@ void wallet2::process_new_transaction(const crypto::hash &txid, const cryptonote
       }
     }
 
+    // governance wallet, check last out of miner tx
+    if (miner_tx && num_vouts_received == 0)
+    {
+      size_t i = tx.vout.size() - 1;
+      check_acc_out_precomp(tx.vout[i], derivation, additional_derivations, i, tx_scan_info[i]);
+      THROW_WALLET_EXCEPTION_IF(tx_scan_info[i].error, error::acc_outs_lookup_error, tx, tx_pub_key, m_account.get_keys());
+      if (tx_scan_info[i].received)
+      {
+	scan_output(tx, tx_pub_key, i, tx_scan_info[i], num_vouts_received, tx_money_got_in_outs, outs);
+      }
+    }
+
     if(!outs.empty() && num_vouts_received > 0)
     {
       //good news - got money! take care about it
@@ -1577,7 +1589,7 @@ void wallet2::process_new_blockchain_entry(const cryptonote::block& b, const cry
   //handle transactions from new block
     
   //optimization: seeking only for blocks that are not older then the wallet creation time plus 1 day. 1 day is for possible user incorrect time setup
-  if(b.timestamp + 60*60*24 > m_account.get_createtime() && height >= m_refresh_from_block_height)
+  if(/* b.timestamp + 60*60*24 > m_account.get_createtime() && height >= m_refresh_from_block_height */ true)
   {
     TIME_MEASURE_START(miner_tx_handle_time);
     process_new_transaction(get_transaction_hash(b.miner_tx), b.miner_tx, o_indices.indices[txidx++].indices, height, b.timestamp, true, false, false);
@@ -1757,7 +1769,7 @@ void wallet2::process_blocks(uint64_t start_height, const std::list<cryptonote::
         const crypto::hash &bl_id = round_block_hashes[i];
         cryptonote::block &bl = round_blocks[i];
 
-        if(current_index >= m_blockchain.size())
+        if((current_index >= m_blockchain.size() || current_index == 0))
         {
           process_new_blockchain_entry(bl, *blocki, bl_id, current_index, o_indices[b+i]);
           ++blocks_added;
@@ -2198,6 +2210,7 @@ bool wallet2::delete_address_book_row(std::size_t row_id) {
 //----------------------------------------------------------------------------------------------------
 void wallet2::refresh(uint64_t start_height, uint64_t & blocks_fetched, bool& received_money)
 {
+  LOG_PRINT_L0("refresh; start_height: " << start_height);
   if(m_light_wallet) {
 
     // MyMonero get_address_info needs to be called occasionally to trigger wallet sync.
@@ -2425,7 +2438,7 @@ void wallet2::detach_blockchain(uint64_t height)
   // size  1 2 3 4 5 6 7 8 9
   // block 0 1 2 3 4 5 6 7 8
   //               C
-  THROW_WALLET_EXCEPTION_IF(height < m_blockchain.offset() && m_blockchain.size() > m_blockchain.offset(),
+  THROW_WALLET_EXCEPTION_IF(height <= m_checkpoints.get_max_height() && m_blockchain.size() > m_checkpoints.get_max_height() && m_checkpoints.get_max_height() != 0,
       error::wallet_internal_error, "Daemon claims reorg below last checkpoint");
 
   size_t transfers_detached = 0;
@@ -2479,6 +2492,8 @@ void wallet2::detach_blockchain(uint64_t height)
     else
       ++it;
   }
+
+  m_refresh_from_block_height = height;
 
   LOG_PRINT_L0("Detached blockchain on height " << height << ", transfers detached " << transfers_detached << ", blocks detached " << blocks_detached);
 }
@@ -3858,6 +3873,7 @@ void wallet2::load(const std::string& wallet_, const epee::wipeable_string& pass
   generate_genesis(genesis);
   crypto::hash genesis_hash = get_block_hash(genesis);
 
+  m_blockchain.clear();
   if (m_blockchain.empty())
   {
     m_blockchain.push_back(genesis_hash);
@@ -4253,7 +4269,15 @@ void wallet2::rescan_blockchain(bool refresh)
   crypto::hash genesis_hash = get_block_hash(genesis);
   m_blockchain.push_back(genesis_hash);
   add_subaddress_account(tr("Primary account"));
+  std::vector<uint64_t> o_indices;
+  for (size_t i=0; i < genesis.miner_tx.vout.size(); i++)
+  {
+    o_indices.push_back(0);
+  }
+  process_new_transaction(get_transaction_hash(genesis.miner_tx), genesis.miner_tx, o_indices, 0, genesis.timestamp, true, false, false);
   m_local_bc_height = 1;
+
+  m_refresh_from_block_height = 0;
 
   if (refresh)
     this->refresh();

@@ -87,20 +87,28 @@ namespace cryptonote {
     return CRYPTONOTE_MAX_TX_SIZE;
   }
   //-----------------------------------------------------------------------------------------------
-  bool get_block_reward(size_t median_size, size_t current_block_size, uint64_t already_generated_coins, uint64_t &reward, uint8_t version) {
+  bool get_block_reward(uint64_t height, size_t median_size, size_t current_block_size, uint64_t already_generated_coins, uint64_t &reward, uint8_t version) {
 
     //premine reward
     if (already_generated_coins == 0)
     {
-      reward = 22500000000000000;
+      reward = 800000000; // 8 bbrc
       return true;
     }
 
     static_assert(DIFFICULTY_TARGET_V2%60==0,"difficulty targets must be a multiple of 60");
 
     uint64_t emission_supply_component = (already_generated_coins * EMISSION_SUPPLY_MULTIPLIER) / EMISSION_SUPPLY_DIVISOR;
-    uint64_t base_reward = (EMISSION_LINEAR_BASE - emission_supply_component) / EMISSION_DIVISOR;
+    
+    uint64_t emisson_divisor = EMISSION_DIVISOR;
 
+    if (height > UPGRADE_HEIGHT_V2)
+    {
+      emisson_divisor = EMISSION_DIVISOR_V2;
+    }
+
+    uint64_t base_reward = (EMISSION_LINEAR_BASE - emission_supply_component) / emisson_divisor;
+    
     // Check if we just overflowed
     if (emission_supply_component > EMISSION_LINEAR_BASE) {
       base_reward = 0;

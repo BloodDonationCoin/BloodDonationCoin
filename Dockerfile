@@ -120,10 +120,10 @@ VOLUME /root/.bitmonero
 
 # Generate your wallet via accessing the container and run:
 # cd /wallet
-# loki-wallet-cli
+# blooddonationcoin-wallet-cli
 VOLUME /wallet
 
-EXPOSE 18080
-EXPOSE 18081
+EXPOSE 28881
+EXPOSE 28882
 
-ENTRYPOINT ["lokid", "--p2p-bind-ip=0.0.0.0", "--p2p-bind-port=18080", "--rpc-bind-ip=0.0.0.0", "--rpc-bind-port=18081", "--non-interactive", "--confirm-external-bind"]
+ENTRYPOINT ["blooddonationcoind", "--p2p-bind-ip=0.0.0.0", "--p2p-bind-port=28881", "--rpc-bind-ip=0.0.0.0", "--rpc-bind-port=28882", "--non-interactive", "--confirm-external-bind"]

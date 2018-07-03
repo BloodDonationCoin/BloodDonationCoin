@@ -1,3 +1,4 @@
+# Copyright (c) 2018, The Blood Donation Coin Project
 # Copyright (c) 2018, The Loki Project
 # Copyright (c) 2014-2018, The Monero Project
 #
@@ -41,9 +42,9 @@ set(checkpoints_headers)
 set(checkpoints_private_headers
   checkpoints.h)
 
-loki_private_headers(checkpoints
+blooddonationcoin_private_headers(checkpoints
   ${checkpoints_private_headers})
-loki_add_library(checkpoints
+blooddonationcoin_add_library(checkpoints
   ${checkpoints_sources}
   ${checkpoints_headers}
   ${checkpoints_private_headers})

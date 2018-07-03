@@ -1,5 +1,6 @@
-// Copyright (c) 2014-2018, The Monero Project
+// Copyright (c)      2018, The Blood Donation Coin Project
 // Copyright (c)      2018, The Loki Project
+// Copyright (c) 2014-2018, The Monero Project
 //
 // All rights reserved.
 //
@@ -41,8 +42,8 @@
 #include <boost/filesystem.hpp>
 #include <boost/regex.hpp>
 
-#undef LOKI_DEFAULT_LOG_CATEGORY
-#define LOKI_DEFAULT_LOG_CATEGORY "WalletAPI"
+#undef BLOODDONATIONCOIN_DEFAULT_LOG_CATEGORY
+#define BLOODDONATIONCOIN_DEFAULT_LOG_CATEGORY "WalletAPI"
 
 namespace epee {
     unsigned int g_test_dbg_lock_sleep = 0;
@@ -316,7 +317,7 @@ std::tuple<bool, std::string, std::string, std::string, std::string> WalletManag
     if (!tools::check_updates(software, buildtag, version, hash))
       return std::make_tuple(false, "", "", "", "");
 
-    if (tools::vercmp(version.c_str(), LOKI_VERSION) > 0)
+    if (tools::vercmp(version.c_str(), BLOODDONATIONCOIN_VERSION) > 0)
     {
       std::string user_url = tools::get_update_url(software, subdir, buildtag, version, true);
       std::string auto_url = tools::get_update_url(software, subdir, buildtag, version, false);

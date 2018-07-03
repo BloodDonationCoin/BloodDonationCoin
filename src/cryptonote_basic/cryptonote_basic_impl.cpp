@@ -44,8 +44,8 @@ using namespace epee;
 #include "common/int-util.h"
 #include "common/dns_utils.h"
 
-#undef LOKI_DEFAULT_LOG_CATEGORY
-#define LOKI_DEFAULT_LOG_CATEGORY "cn"
+#undef BLOODDONATIONCOIN_DEFAULT_LOG_CATEGORY
+#define BLOODDONATIONCOIN_DEFAULT_LOG_CATEGORY "cn"
 
 namespace cryptonote {
 

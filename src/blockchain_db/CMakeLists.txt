@@ -1,3 +1,4 @@
+# Copyright (c) 2018, The Blood Donation Coin Project
 # Copyright (c) 2018, The Loki Project
 # Copyright (c) 2014-2018, The Monero Project
 #
@@ -54,9 +55,9 @@ if (BERKELEY_DB)
   )
 endif()
 
-loki_private_headers(blockchain_db
+blooddonationcoin_private_headers(blockchain_db
   ${crypto_private_headers})
-loki_add_library(blockchain_db
+blooddonationcoin_add_library(blockchain_db
   ${blockchain_db_sources}
   ${blockchain_db_headers}
   ${blockchain_db_private_headers})

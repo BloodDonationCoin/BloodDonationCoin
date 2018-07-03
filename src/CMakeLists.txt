@@ -1,3 +1,4 @@
+# Copyright (c) 2018, The Blood Donation Coin Project
 # Copyright (c) 2018, The Loki Project
 # Copyright (c) 2014-2018, The Monero Project
 #
@@ -40,13 +41,13 @@ if (NOT (MINGW OR APPLE OR FREEBSD OR OPENBSD OR DRAGONFLY))
   add_compile_options("${WARNINGS_AS_ERRORS_FLAG}") # applies only to targets that follow
 endif()
 
-function (loki_private_headers group)
+function (blooddonationcoin_private_headers group)
   source_group("${group}\\Private"
     FILES
       ${ARGN})
 endfunction ()
 
-function (loki_install_headers subdir)
+function (blooddonationcoin_install_headers subdir)
   install(
     FILES       ${ARGN}
     DESTINATION "include/${subdir}"
@@ -64,7 +65,7 @@ function (enable_stack_trace target)
   endif()
 endfunction()
 
-function (loki_add_executable name)
+function (blooddonationcoin_add_executable name)
   source_group("${name}"
     FILES
       ${ARGN})
@@ -83,31 +84,31 @@ function (loki_add_executable name)
   enable_stack_trace("${name}")
 endfunction ()
 
-function (loki_add_library name)
-    loki_add_library_with_deps(NAME "${name}" SOURCES ${ARGN})
+function (blooddonationcoin_add_library name)
+    blooddonationcoin_add_library_with_deps(NAME "${name}" SOURCES ${ARGN})
 endfunction()
 
-function (loki_add_library_with_deps)
-  cmake_parse_arguments(LOKI_ADD_LIBRARY "" "NAME" "DEPENDS;SOURCES" ${ARGN})
-  source_group("${LOKI_ADD_LIBRARY_NAME}" FILES ${LOKI_ADD_LIBRARY_SOURCES})
+function (blooddonationcoin_add_library_with_deps)
+  cmake_parse_arguments(BLOODDONATIONCOIN_ADD_LIBRARY "" "NAME" "DEPENDS;SOURCES" ${ARGN})
+  source_group("${BLOODDONATIONCOIN_ADD_LIBRARY_NAME}" FILES ${BLOODDONATIONCOIN_ADD_LIBRARY_SOURCES})
 
   # Define a ("virtual") object library and an actual library that links those
   # objects together. The virtual libraries can be arbitrarily combined to link
   # any subset of objects into one library archive. This is used for releasing
   # libwallet, which combines multiple components.
-  set(objlib obj_${LOKI_ADD_LIBRARY_NAME})
-  add_library(${objlib} OBJECT ${LOKI_ADD_LIBRARY_SOURCES})
-  add_library("${LOKI_ADD_LIBRARY_NAME}" $<TARGET_OBJECTS:${objlib}>)
-  if (LOKI_ADD_LIBRARY_DEPENDS)
-    add_dependencies(${objlib} ${LOKI_ADD_LIBRARY_DEPENDS})
+  set(objlib obj_${BLOODDONATIONCOIN_ADD_LIBRARY_NAME})
+  add_library(${objlib} OBJECT ${BLOODDONATIONCOIN_ADD_LIBRARY_SOURCES})
+  add_library("${BLOODDONATIONCOIN_ADD_LIBRARY_NAME}" $<TARGET_OBJECTS:${objlib}>)
+  if (BLOODDONATIONCOIN_ADD_LIBRARY_DEPENDS)
+    add_dependencies(${objlib} ${BLOODDONATIONCOIN_ADD_LIBRARY_DEPENDS})
   endif()
-  set_property(TARGET "${LOKI_ADD_LIBRARY_NAME}" PROPERTY FOLDER "libs")
+  set_property(TARGET "${BLOODDONATIONCOIN_ADD_LIBRARY_NAME}" PROPERTY FOLDER "libs")
   target_compile_definitions(${objlib}
-    PRIVATE $<TARGET_PROPERTY:${LOKI_ADD_LIBRARY_NAME},INTERFACE_COMPILE_DEFINITIONS>)
+    PRIVATE $<TARGET_PROPERTY:${BLOODDONATIONCOIN_ADD_LIBRARY_NAME},INTERFACE_COMPILE_DEFINITIONS>)
 endfunction ()
 
 include(Version)
-loki_add_library(version SOURCES ${CMAKE_BINARY_DIR}/version.cpp DEPENDS genversion)
+blooddonationcoin_add_library(version SOURCES ${CMAKE_BINARY_DIR}/version.cpp DEPENDS genversion)
 
 add_subdirectory(common)
 add_subdirectory(crypto)

@@ -34,8 +34,8 @@
 #include <memory>
 #include "misc_log_ex.h"
 
-#undef LOKI_DEFAULT_LOG_CATEGORY
-#define LOKI_DEFAULT_LOG_CATEGORY "perf"
+#undef BLOODDONATIONCOIN_DEFAULT_LOG_CATEGORY
+#define BLOODDONATIONCOIN_DEFAULT_LOG_CATEGORY "perf"
 
 namespace tools
 {

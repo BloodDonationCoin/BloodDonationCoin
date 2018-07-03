@@ -1,3 +1,4 @@
+# Copyright (c) 2018, The Blood Donation Coin Project
 # Copyright (c) 2018, The Loki Project
 # Copyright (c) 2016-2018, The Monero Project
 #
@@ -35,9 +36,9 @@ set(serialization_headers)
 set(serialization_private_headers
   json_object.h)
 
-loki_private_headers(serialization
+blooddonationcoin_private_headers(serialization
   ${serialization_private_headers})
-loki_add_library(serialization
+blooddonationcoin_add_library(serialization
   ${serialization_sources}
   ${serialization_headers}
   ${serialization_private_headers})

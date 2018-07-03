@@ -44,8 +44,8 @@
 #include "wallet/api/unsigned_transaction.h"
 #include "wallet/api/pending_transaction.h"
 
-#undef LOKI_DEFAULT_LOG_CATEGORY
-#define LOKI_DEFAULT_LOG_CATEGORY "debugtools.objectsizes"
+#undef BLOODDONATIONCOIN_DEFAULT_LOG_CATEGORY
+#define BLOODDONATIONCOIN_DEFAULT_LOG_CATEGORY "debugtools.objectsizes"
 
 class size_logger
 {

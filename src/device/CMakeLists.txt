@@ -1,3 +1,4 @@
+# Copyright (c) 2018, The Blood Donation Coin Project
 # Copyright (c) 2018, The Loki Project
 # Copyright (c) 2014-2017, The Monero Project
 #
@@ -56,10 +57,10 @@ else()
   set(Blocks "")
 endif()
 
-loki_private_headers(device
+blooddonationcoin_private_headers(device
   ${device_private_headers})
 
-loki_add_library(device
+blooddonationcoin_add_library(device
   ${device_sources}
   ${device_headers}
   ${device_private_headers})

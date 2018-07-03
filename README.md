@@ -343,7 +343,7 @@ Then you can run make as usual.
 ### On Linux for Android (using docker):
 
         # Build image (select android64.Dockerfile for aarch64)
-        cd utils/build_scripts/ && docker build -f android32.Dockerfile -t loki-android .
+        cd utils/build_scripts/ && docker build -f android32.Dockerfile -t blooddonationcoin-android .
         # Create container
         docker create -it --name BloodDonationCoin-android BloodDonationCoin-android bash
         # Get binaries

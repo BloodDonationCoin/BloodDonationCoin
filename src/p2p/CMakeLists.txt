@@ -1,3 +1,4 @@
+# Copyright (c) 2018, The Blood Donation Coin Project
 # Copyright (c) 2018, The Loki Project
 # Copyright (c) 2014-2018, The Monero Project
 #
@@ -28,15 +29,15 @@
 # THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 cmake_minimum_required (VERSION 2.6)
-project (loki CXX)
+project (blooddonationcoin CXX)
 
 file(GLOB P2P *)
 source_group(p2p FILES ${P2P})
 
 #add_library(p2p ${P2P})
 
-#loki_private_headers(p2p ${P2P})
-loki_add_library(p2p ${P2P})
+#blooddonationcoin_private_headers(p2p ${P2P})
+blooddonationcoin_add_library(p2p ${P2P})
 target_link_libraries(p2p
   PUBLIC
     epee

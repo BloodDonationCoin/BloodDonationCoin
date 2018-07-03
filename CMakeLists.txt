@@ -1,3 +1,4 @@
+# Copyright (c) 2018, The Blood Donation Coin Project
 # Copyright (c) 2018, The Loki Project
 # Copyright (c) 2014-2018, The Monero Project
 #
@@ -42,7 +43,7 @@ endif()
 
 cmake_minimum_required(VERSION 2.8.7)
 
-project(loki)
+project(blooddonationcoin)
 
 function (die msg)
   if (NOT WIN32)

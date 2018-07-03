@@ -176,7 +176,7 @@ namespace daemonizer
     }
     else // interactive
     {
-      //LOG_PRINT_L0("Loki '" << LOKI_RELEASE_NAME << "' (v" << LOKI_VERSION_FULL);
+      //LOG_PRINT_L0("Blood Donation Coin '" << BLOODDONATIONCOIN_RELEASE_NAME << "' (v" << BLOODDONATIONCOIN_VERSION_FULL);
       return executor.run_interactive(vm);
     }
 

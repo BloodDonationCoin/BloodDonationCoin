@@ -1,3 +1,4 @@
+# Copyright (c) 2018, The Blood Donation Coin Project
 # Copyright (c) 2018, The Loki Project
 # Copyright (c) 2014-2018, The Monero Project
 #
@@ -70,9 +71,9 @@ set(common_private_headers
   threadpool.h
   updates.h)
 
-loki_private_headers(common
+blooddonationcoin_private_headers(common
   ${common_private_headers})
-loki_add_library(common
+blooddonationcoin_add_library(common
   ${common_sources}
   ${common_headers}
   ${common_private_headers}

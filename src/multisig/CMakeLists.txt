@@ -1,3 +1,4 @@
+# Copyright (c) 2018, The Blood Donation Coin Project
 # Copyright (c) 2018, The Loki Project
 # Copyright (c) 2017-2018, The Monero Project
 #
@@ -35,10 +36,10 @@ set(multisig_headers)
 set(multisig_private_headers
   multisig.h)
 
-loki_private_headers(multisig
+blooddonationcoin_private_headers(multisig
   ${multisig_private_headers})
 
-loki_add_library(multisig
+blooddonationcoin_add_library(multisig
   ${multisig_sources}
   ${multisig_headers}
   ${multisig_private_headers})

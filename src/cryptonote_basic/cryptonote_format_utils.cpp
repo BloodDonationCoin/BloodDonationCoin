@@ -732,7 +732,7 @@ namespace cryptonote
 
     switch (decimal_point)
     {
-      case 9:
+      case 8:
         return "blooddonationcoin";
       case 6:
         return "megablood";

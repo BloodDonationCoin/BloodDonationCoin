@@ -80,6 +80,7 @@ invokes cmake commands as needed.
 #### On Linux and OS X
 
 * Install the dependencies
+`apt-get install build-essential cmake pkg-config libboost-all-dev libssl-dev libzmq3-dev libunbound-dev libsodium-dev`
 * Change to the root of the source code directory and build:
 
         cd BloodDonationCoin

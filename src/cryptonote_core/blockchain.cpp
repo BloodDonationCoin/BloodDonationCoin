@@ -3878,6 +3878,8 @@ uint64_t Blockchain::prevalidate_block_hashes(uint64_t height, const std::list<c
   // pre: A A A A B B B B C C C C D D D D
 
   // easy case: height >= hashes
+  if(height == 0) return hashes.size();
+
   if (height >= m_blocks_hash_of_hashes.size() * HASH_OF_HASHES_STEP)
     return hashes.size();
 
